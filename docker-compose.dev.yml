@@ -1,0 +1,72 @@
+version: "3.8"
+
+name: cybertrax
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cybertrax-postgres-dev
+    environment:
+      POSTGRES_USER: cybertrax
+      POSTGRES_PASSWORD: cybertrax_password
+      POSTGRES_DB: cybertrax
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data_dev:/var/lib/postgresql/data
+    networks:
+      - cybertrax-network-dev
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.dev
+    image: cybertrax-backend-dev
+    container_name: cybertrax-backend-dev
+    environment:
+      DATABASE_URL: postgresql://cybertrax:cybertrax_password@postgres:5432/cybertrax
+      API_PORT: 3000
+      JWT_SECRET: dev-secret-key
+      ADMIN_LOGIN: admin
+      ADMIN_PASSWORD: admin123
+      DISTANCE_API_KEY: ${DISTANCE_API_KEY:-}
+      DISTANCE_API_URL: https://api.openrouteservice.org/v2
+      NODE_ENV: development
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+    depends_on:
+      - postgres
+    networks:
+      - cybertrax-network-dev
+    command: npm run start:dev
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.dev
+    image: cybertrax-frontend-dev
+    container_name: cybertrax-frontend-dev
+    environment:
+      REACT_APP_API_URL: http://localhost:3000/api
+      VITE_API_URL: http://localhost:3000/api
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - cybertrax-network-dev
+
+volumes:
+  postgres_data_dev:
+    driver: local
+
+networks:
+  cybertrax-network-dev:
+    driver: bridge
+
