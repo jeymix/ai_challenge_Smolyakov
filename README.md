@@ -5,40 +5,47 @@
 ## Технологии
 
 ### Backend
+
 - Node.js + TypeScript
 - NestJS
 - TypeORM
 - PostgreSQL
 
 ### Frontend
+
 - React + TypeScript
 - Vite
 - Tailwind CSS
 - React Router
 
 ### Инфраструктура
+
 - Docker & Docker Compose
 
 ## Быстрый старт
 
 ### Требования
+
 - Docker и Docker Compose
 - Node.js 20+ (для локальной разработки без Docker)
 
 ### Запуск через Docker (рекомендуется)
 
 1. Клонируйте репозиторий:
+
 ```bash
 git clone <repository-url>
 cd AI-challenge_Смольяков
 ```
 
 2. Запустите в режиме разработки:
+
 ```bash
 docker-compose -f docker-compose.dev.yml up
 ```
 
 3. Приложение будет доступно:
+
 - Frontend: http://localhost:5173
 - Backend API: http://localhost:3000
 - Swagger Docs: http://localhost:3000/api/docs
@@ -58,12 +65,14 @@ docker-compose up -d
 #### Backend
 
 1. Установите зависимости:
+
 ```bash
 cd backend
 npm install
 ```
 
 2. Настройте переменные окружения (создайте `.env`):
+
 ```
 DATABASE_URL=postgresql://cybertrax:cybertrax_password@localhost:5432/cybertrax
 API_PORT=3000
@@ -74,11 +83,13 @@ NODE_ENV=development
 ```
 
 3. Запустите миграции:
+
 ```bash
 npm run migration:run
 ```
 
 4. Запустите сервер:
+
 ```bash
 npm run start:dev
 ```
@@ -86,17 +97,20 @@ npm run start:dev
 #### Frontend
 
 1. Установите зависимости:
+
 ```bash
 cd frontend
 npm install
 ```
 
 2. Создайте `.env`:
+
 ```
 VITE_API_URL=http://localhost:3000/api
 ```
 
 3. Запустите dev server:
+
 ```bash
 npm run dev
 ```
@@ -124,6 +138,7 @@ npm run dev
 ## API Endpoints
 
 ### Публичные
+
 - `GET /api/cities` - Список городов
 - `POST /api/orders/calculate` - Расчет стоимости
 - `POST /api/orders` - Создать заказ
@@ -131,6 +146,7 @@ npm run dev
 - `GET /api/health` - Health check
 
 ### Админские (требуют авторизации)
+
 - `POST /api/auth/admin/login` - Вход в админку
 - `GET /api/orders` - Реестр заказов
 - `PATCH /api/orders/:id/payment-status` - Изменить статус оплаты
@@ -142,6 +158,7 @@ npm run dev
 ## Учетные данные админа
 
 По умолчанию:
+
 - Логин: `admin`
 - Пароль: `admin123`
 
@@ -157,6 +174,7 @@ docker-compose exec backend npm run seed
 ```
 
 Или локально:
+
 ```bash
 cd backend
 npm run seed

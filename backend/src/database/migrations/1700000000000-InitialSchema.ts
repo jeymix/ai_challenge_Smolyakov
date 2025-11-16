@@ -96,9 +96,8 @@ export class InitialSchema1700000000000 implements MigrationInterface {
     await queryRunner.query(`DROP TABLE IF EXISTS "tariffs"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "cities"`);
     await queryRunner.query(`DROP TABLE IF EXISTS "users"`);
-    
+
     // Удаление enum
     await queryRunner.query(`DROP TYPE IF EXISTS "orders_paymentstatus_enum"`);
   }
 }
-
